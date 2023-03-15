@@ -6,16 +6,16 @@ public class SphereMovement : MonoBehaviour
 {
     [SerializeField] private float _speed;
 
-    public Vector3 TargetPos;
+    public Vector3 MovementTargetPosition;
 
     private void Start()
     {
-        TargetPos = transform.position;
+        MovementTargetPosition = transform.position;
     }
 
     private void Update()
     {
         var step = _speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, TargetPos, step);
+        transform.position = Vector3.MoveTowards(transform.position, MovementTargetPosition, step);
     }
 }

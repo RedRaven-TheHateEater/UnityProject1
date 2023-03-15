@@ -34,7 +34,7 @@ public class PlayerControl : MonoBehaviour
             {
                 Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector3 worldPosition = new Vector3(MousePos.x, MousePos.y, 0);
-                _sphereMovement.TargetPos = worldPosition;
+                _sphereMovement.MovementTargetPosition = worldPosition;
             }
         }
     }

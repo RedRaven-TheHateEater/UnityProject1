@@ -14,31 +14,31 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _generator;
 
     public FoodGenerator _foodGenerator;
-    private AIControl aiControl;
-    private PlayerControl playerControl;
+    private AIControl _aiControl;
+    private PlayerControl _playerControl;
 
     private void Start()
     {
-        aiControl = gameObject.GetComponent<AIControl>();
-        playerControl = gameObject.GetComponent<PlayerControl>();
+        _aiControl = gameObject.GetComponent<AIControl>();
+        _playerControl = gameObject.GetComponent<PlayerControl>();
 
         _foodGenerator = _generator.GetComponent<FoodGenerator>();
     }
 
-    public void ChangeControlType(ControlType NewMode)
+    public void ChangeControlType(ControlType NewControlType)
     {
-        playerControl.Turn(false);
-        aiControl.Turn(false);
-        switch (NewMode)
+        _playerControl.Turn(false);
+        _aiControl.Turn(false);
+        switch (NewControlType)
         {
             case ControlType.None:
-                gameObject.GetComponent<SphereMovement>().TargetPos = transform.position;
+                gameObject.GetComponent<SphereMovement>().MovementTargetPosition = transform.position;
                 break;
             case ControlType.Player:
-                playerControl.Turn(true);
+                _playerControl.Turn(true);
                 break;
             case ControlType.Auto:
-                aiControl.Turn(true);
+                _aiControl.Turn(true);
                 break;
         }
     }
