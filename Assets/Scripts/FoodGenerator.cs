@@ -4,17 +4,35 @@ using UnityEngine;
 
 public class FoodGenerator : MonoBehaviour
 {
-    public GameObject Food;
-    public List<GameObject> FoodList;
-    public float time = 0;
+    [SerializeField] private float _spawnOffset;
+    [SerializeField] private float _spawnDelay;
+    [SerializeField] private GameObject _food;
 
-    void Update()
+    public List<GameObject> FoodList;
+    private Vector3 _position;
+    private AIControl aIControl;
+    private float _timer = 0;
+
+    private void Start()
     {
-        if (time < 1) { time += Time.deltaTime; } else { time = 0; Generate(); }
+        FoodList = new List<GameObject>();
+        _position = transform.position;
     }
-    public void Generate()
+
+    private void Update()
     {
-        FoodList.Add(Instantiate(Food, transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f), 0), Quaternion.identity));
-        
+        _timer += Time.deltaTime;
+        while (_timer >= _spawnDelay)
+        {
+            _timer-= _spawnDelay;
+            FoodList.Add(GenerateFood());
+        }
     }
-}
+
+    private GameObject GenerateFood()
+    {
+        GameObject food = Instantiate(_food, _position, Quaternion.identity);
+        food.transform.position += new Vector3(Random.Range(-_spawnOffset, _spawnOffset), Random.Range(-_spawnOffset, _spawnOffset), 0);
+        return food;
+    }
+} 

@@ -4,31 +4,46 @@ using UnityEngine;
 
 public class AIControl : MonoBehaviour
 {
-    public bool On = false;
+    [SerializeField] private float _seekDelay;
 
-    public Player player;
+    private bool _on = false;
+    private Player _player;
+    private float _timer = 0;
+
     void Start()
     {
-        player = gameObject.GetComponent<Player>();
+        _player = gameObject.GetComponent<Player>();
     }
 
-    void Update()
+    private void Update()
     {
-        if (On)
+        if (_on)
         {
-            if (player.foodGenerator.FoodList.Count>0)
+            _timer += Time.deltaTime;
+            while (_timer >= _seekDelay)
             {
-                SphereMovement.TargetPos = FindClosest().transform.position;
+                _timer -= _seekDelay;
+                MakeClosestTarget();
             }
         }
     }
-    GameObject FindClosest()
+
+    private void MakeClosestTarget()
     {
-        GameObject Closest = player.foodGenerator.FoodList[0];
-        foreach (GameObject i in player.foodGenerator.FoodList.ToArray())
+        List<GameObject> FoodList = _player._foodGenerator.FoodList;
+        if (FoodList.Count > 0)
         {
-            if (Vector3.Distance(i.transform.position, transform.position) < Vector3.Distance(Closest.transform.position, transform.position)) { Closest = i; }
+            Vector3 TargetPosition = FoodList[0].transform.position;
+            //foreach (GameObject i in FoodList.ToArray())
+            //{
+            //    if (Vector3.Distance(i.transform.position, transform.position) < Vector3.Distance(TargetPosition, transform.position)) { ClosestPosition = i.transform.position; }
+            //}
+            gameObject.GetComponent<SphereMovement>().TargetPos = TargetPosition;
         }
-        return Closest;
+    }
+
+    public void Turn(bool On)
+    {
+        _on = On;
     }
 }

@@ -4,21 +4,18 @@ using UnityEngine;
 
 public class SphereMovement : MonoBehaviour
 {
+    [SerializeField] private float _speed;
 
-    public static Vector3 TargetPos;
-    void Start()
+    public Vector3 TargetPos;
+
+    private void Start()
     {
         TargetPos = transform.position;
     }
 
-    void Update()
+    private void Update()
     {
-        float dist = Vector3.Distance(TargetPos, transform.position);
-        if (dist > 1)
-        {
-            Vector3 NeedPos = (TargetPos - transform.position) / (dist * 20);
-            transform.position += NeedPos;
-            //Debug.LogError(transform.position);
-        }
+        var step = _speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, TargetPos, step);
     }
 }

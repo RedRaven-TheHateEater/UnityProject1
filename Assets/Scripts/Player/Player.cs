@@ -1,47 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public byte Mode = 1;
-    AIControl aiControl;
-    PlayerControl playerControl;
+    public enum ControlType : byte
+    {
+        None = 0,
+        Player = 1,
+        Auto = 2
+    }
 
-    public GameObject generator;
-    public FoodGenerator foodGenerator;
+    [SerializeField] private GameObject _generator;
 
-    void Start()
+    public FoodGenerator _foodGenerator;
+    private AIControl aiControl;
+    private PlayerControl playerControl;
+
+    private void Start()
     {
         aiControl = gameObject.GetComponent<AIControl>();
         playerControl = gameObject.GetComponent<PlayerControl>();
 
-        foodGenerator = generator.GetComponent<FoodGenerator>();
+        _foodGenerator = _generator.GetComponent<FoodGenerator>();
     }
 
-
-    public void ChangeMode(ControlMode NewMode)
+    public void ChangeControlType(ControlType NewMode)
     {
-        playerControl.On = false;
-        aiControl.On = false;
+        playerControl.Turn(false);
+        aiControl.Turn(false);
         switch (NewMode)
         {
-            case ControlMode.ControlModePlayer:
-                playerControl.On = true;
+            case ControlType.None:
+                gameObject.GetComponent<SphereMovement>().TargetPos = transform.position;
                 break;
-            case ControlMode.ControlModeNone:
-                //ничего не делать
+            case ControlType.Player:
+                playerControl.Turn(true);
                 break;
-            case ControlMode.ControlModeAI:
-                aiControl.On = true;
+            case ControlType.Auto:
+                aiControl.Turn(true);
                 break;
         }
     }
-    public enum ControlMode : byte
-    {
-        ControlModePlayer = 0,
-        ControlModeNone = 1,
-        ControlModeAI = 2
-    }
+
 }

@@ -4,28 +4,43 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    public bool On = false;
-    bool Clicked = false;
-    void Start()
-    {
+    private bool _on = false;
+    private bool _clicked = false;
+    private SphereMovement _sphereMovement;
 
+    private void Start()
+    {
+        _sphereMovement = gameObject.GetComponent<SphereMovement>();
     }
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetMouseButtonDown(0) & !Clicked) { Clicked = true; Click(); }
-        else if (!Input.GetMouseButtonDown(0) & Clicked) { Clicked = false; }
+        if (Input.GetMouseButtonDown(0) & !_clicked)
+        {
+            _clicked = true;
+            Click();
+        }
+        else if (!Input.GetMouseButtonDown(0) & _clicked)
+        {
+            _clicked = false;
+        }
     }
-    void Click()
+
+    private void Click()
     {
-        if (On)
+        if (_on)
         {
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector3 worldPosition = new Vector3(MousePos.x, MousePos.y,0);
-                SphereMovement.TargetPos = worldPosition;
+                Vector3 worldPosition = new Vector3(MousePos.x, MousePos.y, 0);
+                _sphereMovement.TargetPos = worldPosition;
             }
         }
+    }
+
+    public void Turn(bool On)
+    {
+        _on = On;
     }
 }
