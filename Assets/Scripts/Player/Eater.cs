@@ -10,6 +10,7 @@ public class Eater : MonoBehaviour
     {
         _player = gameObject.GetComponent<Player>();
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         _player._foodGenerator.FoodList.Remove(collision.gameObject);

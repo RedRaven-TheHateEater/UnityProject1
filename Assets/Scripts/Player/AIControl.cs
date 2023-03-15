@@ -10,6 +10,11 @@ public class AIControl : MonoBehaviour
     private Player _player;
     private float _timer = 0;
 
+    public void Turn(bool On)
+    {
+        _on = On;
+    }
+
     private void Start()
     {
         _player = gameObject.GetComponent<Player>();
@@ -40,10 +45,5 @@ public class AIControl : MonoBehaviour
             //}
             gameObject.GetComponent<SphereMovement>().MovementTargetPosition = TargetPosition;
         }
-    }
-
-    public void Turn(bool On)
-    {
-        _on = On;
     }
 }

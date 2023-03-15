@@ -8,6 +8,11 @@ public class PlayerControl : MonoBehaviour
     private bool _clicked = false;
     private SphereMovement _sphereMovement;
 
+    public void Turn(bool On)
+    {
+        _on = On;
+    }
+
     private void Start()
     {
         _sphereMovement = gameObject.GetComponent<SphereMovement>();
@@ -37,10 +42,5 @@ public class PlayerControl : MonoBehaviour
                 _sphereMovement.MovementTargetPosition = worldPosition;
             }
         }
-    }
-
-    public void Turn(bool On)
-    {
-        _on = On;
     }
 }

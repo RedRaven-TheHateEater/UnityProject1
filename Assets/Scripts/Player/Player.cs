@@ -17,14 +17,6 @@ public class Player : MonoBehaviour
     private AIControl _aiControl;
     private PlayerControl _playerControl;
 
-    private void Start()
-    {
-        _aiControl = gameObject.GetComponent<AIControl>();
-        _playerControl = gameObject.GetComponent<PlayerControl>();
-
-        _foodGenerator = _generator.GetComponent<FoodGenerator>();
-    }
-
     public void ChangeControlType(ControlType NewControlType)
     {
         _playerControl.Turn(false);
@@ -43,4 +35,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        _aiControl = gameObject.GetComponent<AIControl>();
+        _playerControl = gameObject.GetComponent<PlayerControl>();
+
+        _foodGenerator = _generator.GetComponent<FoodGenerator>();
+    }
 }

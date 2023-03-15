@@ -14,6 +14,7 @@ public class ChangeControlButton : MonoBehaviour
         Button button = GetComponent<Button>();
         button.onClick.AddListener(OnClick);
     }
+
     private void OnClick()
     {
         //Debug.LogError("смена режима");
